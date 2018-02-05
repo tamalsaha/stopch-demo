@@ -6,6 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 	"fmt"
+	"time"
 )
 
 var shutdownSignals = []os.Signal{os.Interrupt, syscall.SIGTERM}
@@ -37,21 +38,21 @@ func main() {
 	go f1(stopCh)
 	go f2(stopCh)
 
-	<-stopCh
+	time.Sleep(10*time.Minute)
 }
 
 func f1(stopCh <-chan struct{}) {
 	fmt.Println("f1")
-	go func() {
+	// go func() {
 		<-stopCh
 		fmt.Println("f1 >>>>>>>>>>>")
-	}()
+	//}()
 }
 
 func f2(stopCh <-chan struct{}) {
 	fmt.Println("f2")
-	go func() {
+	//go func() {
 		<-stopCh
 		fmt.Println("f2 >>>>>>>>>>>")
-	}()
+	//}()
 }
